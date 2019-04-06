@@ -1,0 +1,65 @@
+/*
+1+1+20+20+90 =132
+
+1 10 100
+*/
+
+body{
+    font-family: Arial;
+    width: 900px;
+    margin: 0 auto;
+    background: #f39c12;
+    color: #f5f5f5;
+    margin-top: 60px;
+}
+
+h1{
+    text-align: center;
+}
+
+.blogs .blog{
+    background: rgba(255,255,255,.9);
+    color: #222;
+    padding: 1em;
+    border-radius: 10px;
+    margin-bottom: 1em;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+.blog .blog-body{
+    font-size: 1.1em;
+}
+
+.blog{
+    
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: flex;
+}
+
+.blog .user-info{
+    margin-right: 1em;
+}
+.blog .user-info .user-pic{
+    margin-top: 1.5em;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+     box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+
+.blog .user-info .user-name{
+    text-align: center;
+    font-weight: bold;
+}
+
+
+
+
+
+
+
+
+

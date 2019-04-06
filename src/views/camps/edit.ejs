@@ -1,0 +1,28 @@
+<% include ../partials/header %>
+
+<div class="camp_form">
+  <h3>New Camp Form</h3>
+  <form action="/camps/<%= camp.id %>/?_method=PUT" method="post">
+    Name
+    <br />
+    <input type="text" name="campE[name]" value="<%=camp.name%>" />
+    <br />
+    Image
+    <br />
+    <input type="text" name="campE[image]" value="<%=camp.image %>" />
+    <br />
+    Description
+    <br />
+    <textarea name="campE[description]" value="">
+<%=camp.description %></textarea
+    >
+    <button>submit</button>
+  </form>
+  <br />
+
+  <a href="/camps">
+    <button>Back</button>
+  </a>
+</div>
+
+<% include ../partials/footer %>

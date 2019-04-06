@@ -1,0 +1,18 @@
+<% include ../partials/header %>
+
+<div class="camp_form">
+  <h3>New Camp Form</h3>
+  <form action="/camps" method="post">
+    Name<br /><input type="text" name="name" /><br />
+    Image<br /><input type="text" name="image" /><br />
+    Description<br /><textarea name="description"></textarea>
+    <button>submit</button>
+  </form>
+  <br />
+
+  <a href="/camps">
+    <button>Back</button>
+  </a>
+</div>
+
+<% include ../partials/footer %>

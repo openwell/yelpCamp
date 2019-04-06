@@ -1,0 +1,19 @@
+<% include ../partials/header %>
+
+<div class="camp_form">
+  <h3>Add New Comment</h3>
+  <form
+    action="/camps/<%= camp %>/comment/<%=comment2.id%>/?_method=PUT"
+    method="post"
+  >
+    <br />
+    <textarea name="comments[text]"><%= comment2.text %></textarea>
+    <br />
+    <button>submit</button>
+  </form>
+  <a href="/camps/<%= camp %>">
+    <button>Back</button>
+  </a>
+</div>
+
+<% include ../partials/footer %>
