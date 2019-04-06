@@ -1,7 +1,7 @@
-let mongoose = require('mongoose');
-let user = require('../models/user');
+import mongoose from 'mongoose';
+// import user from '../models/user';
 
-let commentSchema = new mongoose.Schema({
+const commentSchema = new mongoose.Schema({
   text: String,
   author: {
     id: {
@@ -11,6 +11,6 @@ let commentSchema = new mongoose.Schema({
     username: String,
   },
 });
-let comment = mongoose.model('comment', commentSchema);
+const comment = mongoose.model('comment', commentSchema);
 
-module.exports = comment;
+export default comment;
