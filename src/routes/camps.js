@@ -1,91 +1,90 @@
-var express = require("express");
-var router = express.Router();
-var camp = require("../models/camp");
-var middlewareObj = require("../middleware");
+import express from 'express';
+import camp from '../models/camp';
+import middlewareObj from '../middleware';
 
-router.get("/", function(req, res) {
-  //get data from db
-  camp.find({}, function(err, from_db) {
+const router = express.Router();
+
+router.get('/', (req, res) => {
+  // get data from db
+  camp.find({}, (err, from_db) => {
     if (err) {
-      console.log("failed0");
+      console.log(err);
     } else {
-      res.render("camps/yelp_camps", { camp: from_db });
+      res.render('camps/yelp_camps', { camp: from_db });
     }
   });
 });
 
-router.post("/", middlewareObj.isLoggedIn, function(req, res) {
-  var name = req.body.name;
-  var image = req.body.image;
-  var des = req.body.description;
-  var author = {
+router.post('/', middlewareObj.isLoggedIn, (req, res) => {
+  const { name } = req.body;
+  const { image } = req.body;
+  const des = req.body.description;
+  const author = {
     id: req.user._id,
-    username: req.user.username
+    username: req.user.username,
   };
-  var add = { name: name, image: image, description: des, author: author };
-  camp.create(add, function(err, from_db) {
-    if (err) {
-      console.log("failed1");
-    } else {
-      res.redirect("/camps");
-    }
-  });
-});
-
-router.get("/form", middlewareObj.isLoggedIn, function(req, res) {
-  res.render("camps/form");
-});
-
-//Edit camp Form
-router.get("/:id/edit", middlewareObj.checkCampOwner, function(req, res) {
-  camp.findById(req.params.id, function(err, responds) {
-    res.render("camps/edit", { camp: responds });
-  });
-});
-
-//edit PUT
-router.put("/:id", middlewareObj.checkCampOwner, function(req, res) {
-  camp.findByIdAndUpdate(req.params.id, req.body.campE, function(
-    err,
-    responds
-  ) {
+  const add = {
+    name,
+    image,
+    description: des,
+    author,
+  };
+  camp.create(add, (err, from_db) => {
     if (err) {
       console.log(err);
-      res.redirect("/camps");
     } else {
-      console.log("worked9");
-      res.redirect("/camps/" + req.params.id);
+      res.redirect('/camps');
     }
   });
 });
 
-//delete
-router.delete("/:id", middlewareObj.checkCampOwner, function(req, res) {
-  camp.findByIdAndRemove(req.params.id, function(err, responds) {
+router.get('/form', middlewareObj.isLoggedIn, (req, res) => {
+  res.render('camps/form');
+});
+
+// Edit camp Form
+router.get('/:id/edit', middlewareObj.checkCampOwner, (req, res) => {
+  camp.findById(req.params.id, (err, responds) => {
+    res.render('camps/edit', { camp: responds });
+  });
+});
+
+// edit PUT
+router.put('/:id', middlewareObj.checkCampOwner, (req, res) => {
+  camp.findByIdAndUpdate(req.params.id, req.body.campE, (err, responds) => {
     if (err) {
       console.log(err);
-      res.redirect("/camps/" + req.params.id);
+      res.redirect('/camps');
     } else {
-      console.log("worked");
-      res.redirect("/camps");
+      res.redirect(`/camps/${req.params.id}`);
     }
   });
 });
 
-router.get("/:id", function(req, res) {
+// delete
+router.delete('/:id', middlewareObj.checkCampOwner, (req, res) => {
+  camp.findByIdAndRemove(req.params.id, (err, responds) => {
+    if (err) {
+      console.log(err);
+      res.redirect(`/camps/${req.params.id}`);
+    } else {
+      res.redirect('/camps');
+    }
+  });
+});
+
+router.get('/:id', (req, res) => {
   camp
     .findById(req.params.id)
-    .populate("comment")
-    .exec(function(err, responds) {
+    .populate('comment')
+    .exec((err, responds) => {
       if (err) {
-        console.log("failed2");
         console.log(err);
-        res.redirect("/camps");
+        res.redirect('/camps');
       } else {
-        console.log("worked");
-        res.render("camps/details", { camp: responds });
+        res.render('camps/details', { camp: responds });
       }
     });
 });
 
-module.exports = router;
+export default router;

@@ -1,52 +1,57 @@
-var express = require("express");
-var router = express.Router();
-var passport = require("passport");
-var user = require("../models/user");
+import express from 'express';
+import passport from 'passport';
+import User from '../models/user';
 
-////==================
-//User Login and Registration
-/////================
-//login
-router.get("/login", function(req, res) {
-  res.render("auth/login");
+const router = express.Router();
+
+// //==================
+// User Login and Registration
+// ///================
+// login
+router.get('/login', (req, res) => {
+  res.render('auth/login');
 });
 
 router.post(
-  "/login",
-  passport.authenticate("local", {
-    successRedirect: "/camps",
-    failureRedirect: "/login"
+  '/login',
+  passport.authenticate('local', {
+    successRedirect: '/camps',
+    failureRedirect: '/login',
   }),
-  function(req, res) {}
 );
 
-//logout
+// logout
 
-router.get("/logout", function(req, res) {
+router.get('/logout', (req, res) => {
   req.logout();
-  req.flash("success", "log out successful");
-  res.redirect("/camps");
+  req.flash('success', 'log out successful');
+  res.redirect('/camps');
 });
 
-//register
-router.get("/register", function(req, res) {
-  res.render("auth/register");
+// register
+router.get('/register', (req, res) => {
+  res.render('auth/register');
 });
 
-router.post("/register", function(req, res) {
-  user.register(
-    new user({ username: req.body.username }),
+router.post('/register', (req, res) => {
+  User.register(
+    new User({ username: req.body.username }),
     req.body.password,
-    function(err, respond) {
-      if (err) {
-        console.log(err);
-        return res.render("auth/register");
-      }
-      passport.authenticate("local")(req, res, function() {
-        res.redirect("/camps");
-      });
-    }
-  );
+  )
+    .then(() => {
+      passport.authenticate('local')
+        .then(() => {
+          res.redirect('/camps');
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    })
+    .catch((err) => {
+      console.log(err);
+      return res.render('auth/register');
+    });
 });
 
-module.exports = router;
+
+export default router;
