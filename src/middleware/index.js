@@ -2,7 +2,6 @@ import camp from '../models/camp';
 import comment from '../models/comment';
 
 const middlewareObj = {
-
   checkCampOwner: async (req, res, next) => {
     if (req.isAuthenticated()) {
       try {
@@ -12,7 +11,6 @@ const middlewareObj = {
         }
         return res.redirect('back');
       } catch (err) {
-        console.log(err);
         return res.redirect('back');
       }
     }
@@ -28,13 +26,13 @@ const middlewareObj = {
         }
         return res.redirect('back');
       } catch (err) {
-        console.log(err);
         return res.redirect('back');
       }
     }
     return res.redirect('back');
   },
   isLoggedIn: (req, res, next) => {
+    console.log(req);
     if (req.isAuthenticated()) {
       return next();
     }

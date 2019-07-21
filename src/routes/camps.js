@@ -6,19 +6,16 @@ const router = express.Router();
 
 router.get('/', (req, res) => {
   // get data from db
-  camp.find({}, (err, from_db) => {
+  camp.find({}, (err, data) => {
     if (err) {
-      console.log(err);
-    } else {
-      res.render('camps/yelp_camps', { camp: from_db });
+      throw err;
     }
+    return res.render('camps/yelp_camps', { camp: data });
   });
 });
 
 router.post('/', middlewareObj.isLoggedIn, (req, res) => {
-  const { name } = req.body;
-  const { image } = req.body;
-  const des = req.body.description;
+  const { name, image, description: des } = req.body;
   const author = {
     id: req.user._id,
     username: req.user.username,
@@ -26,15 +23,14 @@ router.post('/', middlewareObj.isLoggedIn, (req, res) => {
   const add = {
     name,
     image,
-    description: des,
+    des,
     author,
   };
-  camp.create(add, (err, from_db) => {
+  camp.create(add, (err, data) => {
     if (err) {
-      console.log(err);
-    } else {
-      res.redirect('/camps');
+      throw err;
     }
+    return res.redirect('/camps');
   });
 });
 
@@ -53,11 +49,10 @@ router.get('/:id/edit', middlewareObj.checkCampOwner, (req, res) => {
 router.put('/:id', middlewareObj.checkCampOwner, (req, res) => {
   camp.findByIdAndUpdate(req.params.id, req.body.campE, (err, responds) => {
     if (err) {
-      console.log(err);
       res.redirect('/camps');
-    } else {
-      res.redirect(`/camps/${req.params.id}`);
+      throw err;
     }
+    return res.redirect(`/camps/${req.params.id}`);
   });
 });
 
@@ -65,11 +60,10 @@ router.put('/:id', middlewareObj.checkCampOwner, (req, res) => {
 router.delete('/:id', middlewareObj.checkCampOwner, (req, res) => {
   camp.findByIdAndRemove(req.params.id, (err, responds) => {
     if (err) {
-      console.log(err);
       res.redirect(`/camps/${req.params.id}`);
-    } else {
-      res.redirect('/camps');
+      throw err;
     }
+    return res.redirect('/camps');
   });
 });
 
@@ -77,13 +71,12 @@ router.get('/:id', (req, res) => {
   camp
     .findById(req.params.id)
     .populate('comment')
-    .exec((err, responds) => {
+    .exec((err, data) => {
       if (err) {
-        console.log(err);
         res.redirect('/camps');
-      } else {
-        res.render('camps/details', { camp: responds });
+        throw err;
       }
+      return res.render('camps/details', { camp: data });
     });
 });
 

@@ -1,29 +1,29 @@
-var mongoose = require("mongoose");
-var camp = require("./src/models/camp");
-var comment = require("./src/models/comment").default;
+const mongoose = require('mongoose');
+const camp = require('./src/models/camp');
+const comment = require('./src/models/comment').default;
 
-var data = [
+const data = [
   {
-    name: "tayo",
-    image: "profile-1.jpg",
+    name: 'tayo',
+    image: 'profile-1.jpg',
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit nisi ducimus suscipit, esse "
+      'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit nisi ducimus suscipit, esse ',
   },
   {
-    name: "bumi",
-    image: "profile-2.jpg",
+    name: 'bumi',
+    image: 'profile-2.jpg',
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit nisi ducimus suscipit, esse "
+      'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit nisi ducimus suscipit, esse ',
   },
   {
-    name: "yetunde",
-    image: "profile-3.jpeg",
+    name: 'yetunde',
+    image: 'profile-3.jpeg',
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit nisi ducimus suscipit, esse "
-  }
+      'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit nisi ducimus suscipit, esse ',
+  },
 ];
 
-//remove campground
+// remove campground
 function seed() {
   camp.remove({}, function(err) {
     //     if(err){

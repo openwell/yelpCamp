@@ -7,6 +7,7 @@ const router = express.Router();
 // //==================
 // User Login and Registration
 // ///================
+
 // login
 router.get('/login', (req, res) => {
   res.render('auth/login');
@@ -17,11 +18,10 @@ router.post(
   passport.authenticate('local', {
     successRedirect: '/camps',
     failureRedirect: '/login',
-  }),
+  })
 );
 
 // logout
-
 router.get('/logout', (req, res) => {
   req.logout();
   req.flash('success', 'log out successful');
@@ -34,24 +34,20 @@ router.get('/register', (req, res) => {
 });
 
 router.post('/register', (req, res) => {
-  User.register(
-    new User({ username: req.body.username }),
-    req.body.password,
-  )
+  User.register(new User({ username: req.body.username }), req.body.password)
     .then(() => {
-      passport.authenticate('local')
-        .then(() => {
-          res.redirect('/camps');
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      passport.authenticate('local').then(data => {
+        console.log(data);
+        res.redirect('/camps');
+      });
+      // .catch(err => {
+      //   console.log(err);
+      // });
     })
-    .catch((err) => {
+    .catch(err => {
       console.log(err);
       return res.render('auth/register');
     });
 });
-
 
 export default router;
