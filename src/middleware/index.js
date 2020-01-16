@@ -9,9 +9,9 @@ const middlewareObj = {
         if (respond.author.id.equals(req.user._id)) {
           return next();
         }
-        return res.redirect('back');
+        res.redirect('back');
       } catch (err) {
-        return res.redirect('back');
+        res.redirect('back');
       }
     }
     return res.redirect('back');
@@ -24,15 +24,14 @@ const middlewareObj = {
         if (respond.author.id.equals(req.user._id)) {
           return next();
         }
-        return res.redirect('back');
+        res.redirect('back');
       } catch (err) {
-        return res.redirect('back');
+        res.redirect('back');
       }
     }
     return res.redirect('back');
   },
   isLoggedIn: (req, res, next) => {
-    console.log(req);
     if (req.isAuthenticated()) {
       return next();
     }

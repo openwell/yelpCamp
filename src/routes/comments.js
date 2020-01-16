@@ -6,17 +6,17 @@ import middlewareObj from '../middleware';
 const router = express.Router({ mergeParams: true });
 
 router.get('/new', middlewareObj.isLoggedIn, (req, res) => {
-  camp.findById(req.params.id, (err, responds) => {
+  camp.findById(req.params.id, function(err, data) {
     if (err) {
       throw err;
     }
-    return res.render('comments/new', { camp: responds });
+    return res.render('comments/new', { camp: data });
   });
 });
 
 // edit page
 router.get('/:id2/edit', middlewareObj.checkComment, (req, res) => {
-  comment.findById(req.params.id2, (err, data) => {
+  comment.findById(req.params.id2, function(err, data) {
     if (err) {
       res.redirect('back');
       throw err;
@@ -28,7 +28,10 @@ router.get('/:id2/edit', middlewareObj.checkComment, (req, res) => {
 // put edit
 // edit page
 router.put('/:id2', middlewareObj.checkComment, (req, res) => {
-  comment.findByIdAndUpdate(req.params.id2, req.body.comments, (err, data) => {
+  comment.findByIdAndUpdate(req.params.id2, req.body.comments, function(
+    err,
+    data
+  ) {
     if (err) {
       throw err;
     }
@@ -38,7 +41,7 @@ router.put('/:id2', middlewareObj.checkComment, (req, res) => {
 
 // delete
 router.delete('/:id2', middlewareObj.checkComment, (req, res) => {
-  comment.findByIdAndRemove(req.params.id2, (err, data) => {
+  comment.findByIdAndRemove(req.params.id2, function(err, data) {
     if (err) {
       res.redirect('back');
       throw err;
@@ -48,25 +51,21 @@ router.delete('/:id2', middlewareObj.checkComment, (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  camp.findById(req.params.id, (err, data0) => {
-    console.log(data0);
-    if (err) {
+  camp.findById(req.params.id, function(err01, data01) {
+    if (err01) {
       res.render('camps');
-      throw err;
+      throw err01;
     }
-    comment.create(req.body.comments).then((err, data) => {
-      console.log(data);
-      const { id, username } = data.author;
-      const { _id, username: user } = req.user;
+    comment.create(req.body.comments, function(err, data02) {
       if (err) {
         throw err;
       }
-      id = _id;
-      username = user;
-      data.save();
-      data0.comment.push(data);
-      data0.save();
-      return res.redirect(`/camps/${data0._id}`);
+      data02.author.id = req.user._id;
+      data02.author.username = req.user.username;
+      data02.save();
+      data01.comment.push(data02);
+      data01.save();
+      res.redirect(`/camps/${data01._id}`);
     });
   });
 });

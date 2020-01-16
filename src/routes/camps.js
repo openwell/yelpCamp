@@ -30,7 +30,7 @@ router.post('/', middlewareObj.isLoggedIn, (req, res) => {
     if (err) {
       throw err;
     }
-    return res.redirect('/camps');
+    res.redirect('/camps');
   });
 });
 
@@ -40,30 +40,33 @@ router.get('/form', middlewareObj.isLoggedIn, (req, res) => {
 
 // Edit camp Form
 router.get('/:id/edit', middlewareObj.checkCampOwner, (req, res) => {
-  camp.findById(req.params.id, (err, responds) => {
+  camp.findById(req.params.id, function(err, responds) {
     res.render('camps/edit', { camp: responds });
   });
 });
 
 // edit PUT
 router.put('/:id', middlewareObj.checkCampOwner, (req, res) => {
-  camp.findByIdAndUpdate(req.params.id, req.body.campE, (err, responds) => {
+  camp.findByIdAndUpdate(req.params.id, req.body.campE, function(
+    err,
+    responds
+  ) {
     if (err) {
       res.redirect('/camps');
       throw err;
     }
-    return res.redirect(`/camps/${req.params.id}`);
+    res.redirect(`/camps/${req.params.id}`);
   });
 });
 
 // delete
 router.delete('/:id', middlewareObj.checkCampOwner, (req, res) => {
-  camp.findByIdAndRemove(req.params.id, (err, responds) => {
+  camp.findByIdAndRemove(req.params.id, function(err, responds) {
     if (err) {
       res.redirect(`/camps/${req.params.id}`);
       throw err;
     }
-    return res.redirect('/camps');
+    res.redirect('/camps');
   });
 });
 
@@ -71,12 +74,12 @@ router.get('/:id', (req, res) => {
   camp
     .findById(req.params.id)
     .populate('comment')
-    .exec((err, data) => {
+    .exec(function(err, data) {
       if (err) {
         res.redirect('/camps');
         throw err;
       }
-      return res.render('camps/details', { camp: data });
+      res.render('camps/details', { camp: data });
     });
 });
 
