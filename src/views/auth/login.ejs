@@ -1,16 +1,19 @@
 <% include ../partials/header %>
 
-<div class="camp_form">
+<div class="login_form">
   <h3>Login</h3>
   <form action="/login" method="post">
-    Username
-    <br />
-    <input type="text" name="username" placeholder="input username" />
-    <br />Password
-    <br />
-    <input type="password" name="password" placeholder="input password" />
-    <br />
-    <button>submit</button>
+    <div class="login_input">
+      <label> Username</label>
+      <input type="text" name="username" placeholder="Username" />
+    </div>
+    <div class="login_input">
+      <label> Password</label>
+      <input type="password" name="password" placeholder="Password" />
+    </div>
+    <div class="login_button">
+      <button>submit</button>
+    </div>
   </form>
 </div>
 

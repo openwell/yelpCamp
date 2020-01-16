@@ -54,22 +54,12 @@ a:visited {
   color: #000;
 }
 
-/* .nav_link {
-  display: flex;
-  justify-content: center;
-} */
-
-/* .links {
-  display: flex;
-} */
-
 /************ Forms */
 textarea {
   height: 200px;
   width: 300px;
 }
 input {
-  height: 25px;
   outline: none;
 }
 
@@ -136,8 +126,9 @@ input {
   justify-content: center;
   margin-top: 30px;
 }
-
+/********** ********************/
 /********** yelp__camp page */
+/********** ********************/
 .yelp_banner {
   height: 150px;
   border: 1px solid beige;
@@ -148,6 +139,7 @@ input {
   position: relative;
 }
 .yelp_banner h1 {
+  padding-top: 40px;
   font-size: 80px;
   font-weight: 200;
 }
@@ -169,18 +161,6 @@ input {
   justify-content: space-between;
 }
 
-/* .Blogs__blog {
-  display: flex;
-  background: rgba(255, 255, 255, 0.9);
-  color: #222;
-  padding: 1em;
-  margin-bottom: 1em;
-  width: calc(100% - 70%);
-  word-wrap: break-word;
-}
-.Blogs__blog:hover {
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
-} */
 .camp {
   width: 300px;
   height: 250px;
@@ -202,34 +182,46 @@ input {
   margin-right: 0;
   cursor: pointer;
 }
-/* .blog__blog-post__blog-body {
-  font-size: 1.1em;
-}
 
-.blog__user-info {
-  margin-right: 1em;
+/********** ********************/
+/********** Login */
+/********** ********************/
+.login_form {
+  max-width: 500px;
+  margin: 0 auto;
+  background: rgb(216, 216, 216);
+  margin-top: 20vh;
+  padding: 40px;
 }
-
-.blog__user-info__avatar {
-  margin-top: 0.5em;
-  width: 100px;
-  height: 100px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+.login_form h3 {
+  font-size: 50px;
+  font-weight: 200;
+  padding-bottom: 20px;
 }
-
-.blog__user-info__username {
+.login_input {
+  font-size: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-evenly;
+}
+.login_input input {
+  width: 50%;
+  padding: 10px;
+}
+.login_input label {
+  font-size: 16px;
+}
+.login_button {
   text-align: center;
-  font-weight: bold;
 }
-
-.avatar--circle {
-  border-radius: 50%;
+.login_button button {
+  text-align: center;
+  font-size: 20px;
 }
-
-.avatar--tumb {
-  border-radius: none;
-  border: 2px solid #ccc;
-} */
+.login_button button:hover {
+  color: #fff;
+  background: #000;
+}
 
 .success_alert {
   width: 300px;
