@@ -21,7 +21,7 @@ const app = express();
 
 mongoose.connect(
   'mongodb+srv://timi:12345@cluster0-fdmmq.mongodb.net/test?retryWrites=true',
-  { useNewUrlParser: true },
+  { useNewUrlParser: true, useUnifiedTopology: true },
 );
 app.use(cors());
 app.use(express.json());
