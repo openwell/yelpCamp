@@ -1,51 +1,41 @@
-var camp = require("../models/camp");
-var comment = require("../models/comment").default;
+import camp from '../models/camp';
+import comment from '../models/comment';
 
-var middlewareObj = {};
-
-middlewareObj.checkCampOwner = function(req, res, next) {
-  if (req.isAuthenticated()) {
-    camp.findById(req.params.id, function(err, responds) {
-      if (err) {
-        console.log(err);
-        res.redirect("back");
-      } else {
-        if (responds.author.id.equals(req.user._id)) {
-          next();
-        } else {
-          res.redirect("back");
+const middlewareObj = {
+  checkCampOwner: async (req, res, next) => {
+    if (req.isAuthenticated()) {
+      try {
+        const respond = await camp.findById(req.params.id);
+        if (respond.author.id.equals(req.user._id)) {
+          return next();
         }
+        res.redirect('back');
+      } catch (err) {
+        res.redirect('back');
       }
-    });
-  } else {
-    res.redirect("back");
-  }
-};
+    }
+    return res.redirect('back');
+  },
 
-middlewareObj.checkComment = function(req, res, next) {
-  if (req.isAuthenticated()) {
-    comment.findById(req.params.id2, function(err, responds) {
-      if (err) {
-        console.log(err);
-        res.redirect("back");
-      } else {
-        if (responds.author.id.equals(req.user._id)) {
-          next();
-        } else {
-          res.redirect("back");
+  checkComment: async (req, res, next) => {
+    if (req.isAuthenticated()) {
+      try {
+        const respond = await comment.findById(req.params.id2);
+        if (respond.author.id.equals(req.user._id)) {
+          return next();
         }
+        res.redirect('back');
+      } catch (err) {
+        res.redirect('back');
       }
-    });
-  } else {
-    res.redirect("back");
-  }
+    }
+    return res.redirect('back');
+  },
+  isLoggedIn: (req, res, next) => {
+    if (req.isAuthenticated()) {
+      return next();
+    }
+    return res.redirect('/login');
+  },
 };
-
-middlewareObj.isLoggedIn = function(req, res, next) {
-  if (req.isAuthenticated()) {
-    return next();
-  }
-  res.redirect("/login");
-};
-
-module.exports = middlewareObj;
+export default middlewareObj;

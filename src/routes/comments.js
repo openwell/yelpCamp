@@ -1,85 +1,73 @@
-var express = require("express");
-var router = express.Router({ mergeParams: true }); //id trick
-var camp = require("../models/camp");
-var comment = require("../models/comment");
-var user = require("../models/user");
-var middlewareObj = require("../middleware");
+import express from 'express';
+import camp from '../models/camp';
+import comment from '../models/comment';
+import middlewareObj from '../middleware';
 
-router.get("/new", middlewareObj.isLoggedIn, function(req, res) {
-  camp.findById(req.params.id, function(err, responds) {
+const router = express.Router({ mergeParams: true });
+
+router.get('/new', middlewareObj.isLoggedIn, (req, res) => {
+  camp.findById(req.params.id, function(err, data) {
     if (err) {
-      console.log("failed4");
-      console.log(err);
-    } else {
-      console.log("worked");
-      res.render("comments/new", { camp: responds });
+      throw err;
     }
+    return res.render('comments/new', { camp: data });
   });
 });
 
-//edit page
-router.get("/:id2/edit", middlewareObj.checkComment, function(req, res) {
-  comment.findById(req.params.id2, function(err, respond2) {
+// edit page
+router.get('/:id2/edit', middlewareObj.checkComment, (req, res) => {
+  comment.findById(req.params.id2, function(err, data) {
     if (err) {
-      console.log(err);
-      res.redirect("back");
-    } else {
-      console.log(respond2);
-      res.render("comments/edit", { camp: req.params.id, comment2: respond2 });
+      res.redirect('back');
+      throw err;
     }
+    return res.render('comments/edit', { camp: req.params.id, comment2: data });
   });
 });
 
-//put edit
-//edit page
-router.put("/:id2", middlewareObj.checkComment, function(req, res) {
+// put edit
+// edit page
+router.put('/:id2', middlewareObj.checkComment, (req, res) => {
   comment.findByIdAndUpdate(req.params.id2, req.body.comments, function(
     err,
-    respond6
+    data
   ) {
     if (err) {
-      console.log("failed4");
-      console.log(err);
-    } else {
-      res.redirect("/camps/" + req.params.id);
+      throw err;
     }
+    return res.redirect(`/camps/${req.params.id}`);
   });
 });
 
-//delete
-router.delete("/:id2", middlewareObj.checkComment, function(req, res) {
-  comment.findByIdAndRemove(req.params.id2, function(err, respond6) {
+// delete
+router.delete('/:id2', middlewareObj.checkComment, (req, res) => {
+  comment.findByIdAndRemove(req.params.id2, function(err, data) {
     if (err) {
-      console.log(err);
-      res.redirect("back");
-    } else {
-      res.redirect("/camps/" + req.params.id);
+      res.redirect('back');
+      throw err;
     }
+    return res.redirect(`/camps/${req.params.id}`);
   });
 });
 
-router.post("/", function(req, res) {
-  camp.findById(req.params.id, function(err, responds1) {
-    if (err) {
-      console.log("failed5");
-      console.log(err);
-      res.render("camps");
-    } else {
-      comment.create(req.body.comments, function(err, respond6) {
-        if (err) {
-          console.log("failed4");
-          console.log(err);
-        } else {
-          respond6.author.id = req.user._id;
-          respond6.author.username = req.user.username;
-          respond6.save();
-          responds1.comment.push(respond6);
-          responds1.save();
-          res.redirect("/camps/" + responds1._id);
-        }
-      });
+router.post('/', (req, res) => {
+  camp.findById(req.params.id, function(err01, data01) {
+    if (err01) {
+      res.render('camps');
+      throw err01;
     }
+    comment.create(req.body.comments, function(err, data02) {
+      if (err) {
+        throw err;
+      }
+      data02.author.id = req.user._id;
+      data02.author.username = req.user.username;
+      data02.save();
+      data01.comment.push(data02);
+      data01.save();
+      res.redirect(`/camps/${data01._id}`);
+    });
   });
 });
 
-module.exports = router;
+export default router;

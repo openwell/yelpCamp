@@ -1,52 +1,57 @@
-var express = require("express");
-var router = express.Router();
-var passport = require("passport");
-var user = require("../models/user");
+import express from 'express';
+import passport from 'passport';
+import User from '../models/user';
 
-////==================
-//User Login and Registration
-/////================
-//login
-router.get("/login", function(req, res) {
-  res.render("auth/login");
+const router = express.Router();
+
+// //==================
+// User Login and Registration
+// ///================
+
+// login
+router.get('/login', (req, res) => {
+  res.render('auth/login');
 });
 
 router.post(
-  "/login",
-  passport.authenticate("local", {
-    successRedirect: "/camps",
-    failureRedirect: "/login"
-  }),
-  function(req, res) {}
+  '/login',
+  passport.authenticate('local', {
+    successRedirect: '/camps',
+    failureRedirect: '/login',
+  })
 );
 
-//logout
-
-router.get("/logout", function(req, res) {
+// logout
+router.get('/logout', (req, res) => {
   req.logout();
-  req.flash("success", "log out successful");
-  res.redirect("/camps");
+  req.flash('success', 'log out successful');
+  res.redirect('/camps');
 });
 
-//register
-router.get("/register", function(req, res) {
-  res.render("auth/register");
+// register
+router.get('/register', (req, res) => {
+  res.render('auth/register');
 });
 
-router.post("/register", function(req, res) {
-  user.register(
-    new user({ username: req.body.username }),
-    req.body.password,
-    function(err, respond) {
-      if (err) {
-        console.log(err);
-        return res.render("auth/register");
-      }
-      passport.authenticate("local")(req, res, function() {
-        res.redirect("/camps");
-      });
-    }
-  );
+router.post('/register', async (req, res) => {
+  try {
+    const regOutput = await User.register(
+      new User({ username: req.body.username }),
+      req.body.password
+    );
+    passport.authenticate('local')(req, res, () => {
+      res.redirect('/camps');
+    });
+  } catch (err) {
+    console.log(err.message);
+    res.render('auth/register');
+  }
 });
 
-module.exports = router;
+export default router;
+
+// unhandled promise exception i caused when we try to rethrow an error that node has handled
+// if you are using async await and u don't intend to modify the error you dont need try and catch
+// when you make use of a callback which returns an err or res then u can check for if(err) to handle it. dont use try and catch for it
+// for .then will require .catch to get the errors
+// also async and await does return err/responds if err it throws it and else returns data
