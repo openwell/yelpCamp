@@ -24,8 +24,8 @@ const data = [
 ];
 
 // remove campground
-function seed() {
-  camp.remove({}, function(err) {
+// function seed() {
+//   camp.remove({}, function(err) {
     //     if(err){
     //         console.log("failed")
     //     }else{
@@ -50,7 +50,7 @@ function seed() {
     //                     });
     //         }
     //     });
-  });
+  // });
 }
 
 module.exports = seed;
