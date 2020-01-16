@@ -6,12 +6,12 @@
 }
 
 body {
-  font-family: Arial;
-  width: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  max-width: 1440px;
   margin: 0 auto;
   background: #fff;
   color: #000;
-  border: 1px solid black;
 }
 
 ul {
@@ -23,46 +23,47 @@ li {
   padding: 10px;
   text-decoration: none;
 }
-h1 {
-  text-align: center;
-}
-.button,
+
 button {
-  border: 1px solid black;
-  padding: 4px;
-  border-radius: 2px;
-  background: #3498db;
-  margin-bottom: 10px;
+  padding: 5px 10px;
   outline: none;
   cursor: pointer;
 }
 
+/* .button {
+  color: #000;
+} */
+nav {
+  box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3),
+    0 2px 6px 2px rgba(60, 64, 67, 0.15);
+}
+
+/************ Navigation */
 nav ul {
   display: flex;
   justify-content: flex-end;
-  background: #ecf0f1;
+}
+nav ul a:hover {
+  border: 1px solid;
 }
 
-a:link {
+a:link,
+a:visited {
+  font-size: 14px;
   text-decoration: none;
-}
-ul a:link {
-  color: black;
-  padding: 5px;
+  color: #000;
 }
 
-.nav_link {
+/* .nav_link {
   display: flex;
-  background-color: lightskyblue;
-  width: 100%;
-  height: 50px;
   justify-content: center;
-}
+} */
 
-.links {
+/* .links {
   display: flex;
-}
+} */
 
+/************ Forms */
 textarea {
   height: 200px;
   width: 300px;
@@ -72,13 +73,35 @@ input {
   outline: none;
 }
 
-/* laning page */
-.land_con {
-  border: 1px solid black;
+/************ Landing page */
+.hero_banner {
+  padding: 50px;
+  text-align: center;
+}
+.hero_banner h1 {
+  font-size: 100px;
+  padding: 50px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+.hero_banner button {
+  font-size: 20px;
+  margin-top: 50px;
+  padding: 10px;
+  background-color: #000;
+  color: #fff;
+}
+.hero_banner button:hover {
+  background-color: #fff;
+  color: #000;
+  border: 1px solid;
+}
+
+/* details page */
+.yelp_camps {
+  max-width: 1024px;
   margin: 0 auto;
 }
-/* details page */
-
 .details_container {
   width: 100%;
   background: #fff;
@@ -90,10 +113,6 @@ input {
   width: 100%;
   height: auto;
   margin-top: 0.5em;
-
-  /* width: 100px;
-            height: 100px;
-             */
 }
 .details_image img {
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
@@ -118,43 +137,72 @@ input {
   margin-top: 30px;
 }
 
-/* yelp__camp page */
+/********** yelp__camp page */
 .yelp_banner {
-  width: 1000px;
   height: 150px;
   border: 1px solid beige;
   border-radius: 5px;
-  margin: 0 auto;
   background: #ecf0f1;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin: 20px 0;
   text-align: center;
-  padding: 20px;
+  position: relative;
+}
+.yelp_banner h1 {
+  font-size: 80px;
+  font-weight: 200;
+}
+.yelp_banner a {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+.yelp_banner button {
+  background: #3498db;
+}
+.yelp_banner button:hover {
+  background: #3498db80;
 }
 
 .yelp_container {
   display: flex;
-  width: 1000px;
-  margin: 0 auto;
   flex-wrap: wrap;
-  flex: 1;
-  justify-content: space-evenly;
+  justify-content: space-between;
 }
 
-.Blogs__blog {
+/* .Blogs__blog {
   display: flex;
   background: rgba(255, 255, 255, 0.9);
   color: #222;
   padding: 1em;
-  border-radius: 10px;
-  /* margin: 0 auto; */
   margin-bottom: 1em;
   width: calc(100% - 70%);
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
   word-wrap: break-word;
 }
-
-.blog__blog-post__blog-body {
+.Blogs__blog:hover {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+} */
+.camp {
+  width: 300px;
+  height: 250px;
+}
+.camp:hover {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+}
+.camp img {
+  width: 300px;
+  height: 200px;
+}
+.camp_info div {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 10px;
+}
+.camp button {
+  background: #3498db;
+  margin-right: 0;
+  cursor: pointer;
+}
+/* .blog__blog-post__blog-body {
   font-size: 1.1em;
 }
 
@@ -181,7 +229,7 @@ input {
 .avatar--tumb {
   border-radius: none;
   border: 2px solid #ccc;
-}
+} */
 
 .success_alert {
   width: 300px;
