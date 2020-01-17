@@ -15,11 +15,13 @@
           <a href="/camps "> <li>Camps</li></a>
           <a href="/camps/form"> <li>New Camp</li></a>
           <% if(!currentUser){ %>
-          <a href="/login "> <li>Login</li></a>
+          <a href="/login "> <li style="background: #000; color: #fff;">Login</li></a>
           <a href="/register "> <li>Register</li></a>
           <% } else{ %>
-          <li>Signed in as <%= currentUser.username %></li>
-          <a href="/logout "> <li>Log Out</li></a>
+          <li>Welcome <%= currentUser.username %></li>
+          <a href="/logout ">
+            <li style="background: #000; color: #fff;">Log Out</li></a
+          >
           <% }%>
         </ul>
       </nav>
