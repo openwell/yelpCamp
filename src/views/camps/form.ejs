@@ -1,18 +1,27 @@
 <% include ../partials/header %>
 
-<div class="camp_form">
-  <h3>New Camp Form</h3>
+<div class="newCamp_form">
+  <h3>Add Camp</h3>
   <form action="/camps" method="post">
-    Name<br /><input type="text" name="name" /><br />
-    Image<br /><input type="text" name="image" /><br />
-    Description<br /><textarea name="description"></textarea>
-    <button>submit</button>
+    <div class="newCamp_input">
+      <label for="">Name </label>
+      <input type="text" name="name" />
+    </div>
+    <div class="newCamp_input">
+      <label for="">Image</label>
+      <input type="text" name="image" />
+    </div>
+    <div class="newCamp_input">
+      <label for="">Description</label>
+      <textarea name="description"></textarea>
+    </div>
+    <div class="newCamp_buttons">
+      <button>Submit</button>
+      <a href="/camps">
+        <button>Back</button>
+      </a>
+    </div>
   </form>
-  <br />
-
-  <a href="/camps">
-    <button>Back</button>
-  </a>
 </div>
 
 <% include ../partials/footer %>

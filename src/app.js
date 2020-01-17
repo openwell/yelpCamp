@@ -12,14 +12,21 @@ import user from './models/user';
 import commentRoutes from './routes/comments';
 import campRoutes from './routes/camps';
 import authRoutes from './routes/auth';
+import seeder from '../seed';
 // import LocalStrategy from 'passport-local';
 
 dotenv.config();
 const app = express();
 
+// seeder();
 mongoose.connect(
   'mongodb+srv://timi:12345@cluster0-fdmmq.mongodb.net/test?retryWrites=true',
-  { useNewUrlParser: true, useCreateIndex: true }
+  {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false,
+  }
 );
 app.use(cors());
 app.use(express.json());

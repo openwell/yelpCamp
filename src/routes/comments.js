@@ -6,7 +6,7 @@ import middlewareObj from '../middleware';
 const router = express.Router({ mergeParams: true });
 
 router.get('/new', middlewareObj.isLoggedIn, (req, res) => {
-  camp.findById(req.params.id, function(err, data) {
+  camp.findById(req.params.id, (err, data) => {
     if (err) {
       throw err;
     }
@@ -16,7 +16,7 @@ router.get('/new', middlewareObj.isLoggedIn, (req, res) => {
 
 // edit page
 router.get('/:id2/edit', middlewareObj.checkComment, (req, res) => {
-  comment.findById(req.params.id2, function(err, data) {
+  comment.findById(req.params.id2, (err, data) => {
     if (err) {
       res.redirect('back');
       throw err;
@@ -28,10 +28,7 @@ router.get('/:id2/edit', middlewareObj.checkComment, (req, res) => {
 // put edit
 // edit page
 router.put('/:id2', middlewareObj.checkComment, (req, res) => {
-  comment.findByIdAndUpdate(req.params.id2, req.body.comments, function(
-    err,
-    data
-  ) {
+  comment.findByIdAndUpdate(req.params.id2, req.body.comments, (err, data) => {
     if (err) {
       throw err;
     }
@@ -41,7 +38,7 @@ router.put('/:id2', middlewareObj.checkComment, (req, res) => {
 
 // delete
 router.delete('/:id2', middlewareObj.checkComment, (req, res) => {
-  comment.findByIdAndRemove(req.params.id2, function(err, data) {
+  comment.findByIdAndRemove(req.params.id2, (err, data) => {
     if (err) {
       res.redirect('back');
       throw err;
@@ -51,12 +48,12 @@ router.delete('/:id2', middlewareObj.checkComment, (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  camp.findById(req.params.id, function(err01, data01) {
+  camp.findById(req.params.id, (err01, data01) => {
     if (err01) {
       res.render('camps');
       throw err01;
     }
-    comment.create(req.body.comments, function(err, data02) {
+    comment.create(req.body.comments, (err, data02) => {
       if (err) {
         throw err;
       }

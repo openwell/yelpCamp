@@ -15,7 +15,7 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', middlewareObj.isLoggedIn, (req, res) => {
-  const { name, image, description: des } = req.body;
+  const { name, image, description } = req.body;
   const author = {
     id: req.user._id,
     username: req.user.username,
@@ -23,7 +23,7 @@ router.post('/', middlewareObj.isLoggedIn, (req, res) => {
   const add = {
     name,
     image,
-    des,
+    description,
     author,
   };
   camp.create(add, (err, data) => {
@@ -40,17 +40,14 @@ router.get('/form', middlewareObj.isLoggedIn, (req, res) => {
 
 // Edit camp Form
 router.get('/:id/edit', middlewareObj.checkCampOwner, (req, res) => {
-  camp.findById(req.params.id, function(err, responds) {
+  camp.findById(req.params.id, (err, responds) => {
     res.render('camps/edit', { camp: responds });
   });
 });
 
 // edit PUT
 router.put('/:id', middlewareObj.checkCampOwner, (req, res) => {
-  camp.findByIdAndUpdate(req.params.id, req.body.campE, function(
-    err,
-    responds
-  ) {
+  camp.findByIdAndUpdate(req.params.id, req.body.campE, (err, responds) => {
     if (err) {
       res.redirect('/camps');
       throw err;
@@ -61,7 +58,7 @@ router.put('/:id', middlewareObj.checkCampOwner, (req, res) => {
 
 // delete
 router.delete('/:id', middlewareObj.checkCampOwner, (req, res) => {
-  camp.findByIdAndRemove(req.params.id, function(err, responds) {
+  camp.findByIdAndRemove(req.params.id, (err, responds) => {
     if (err) {
       res.redirect(`/camps/${req.params.id}`);
       throw err;
@@ -74,7 +71,7 @@ router.get('/:id', (req, res) => {
   camp
     .findById(req.params.id)
     .populate('comment')
-    .exec(function(err, data) {
+    .exec((err, data) => {
       if (err) {
         res.redirect('/camps');
         throw err;
