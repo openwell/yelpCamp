@@ -1,5 +1,8 @@
+// import mongoose from 'mongoose';
+// import camp from './src/models/camp';
+// import comment from './src/models/comment';
 const mongoose = require('mongoose');
-const camp = require('./src/models/camp');
+const camp = require('./src/models/camp').default;
 const comment = require('./src/models/comment').default;
 
 const data = [
@@ -24,33 +27,21 @@ const data = [
 ];
 
 // remove campground
-// function seed() {
-//   camp.remove({}, function(err) {
-    //     if(err){
-    //         console.log("failed")
-    //     }else{
-    //        console.log("removed camp");
-    //     }
-    // });
-    //     data.forEach(function(seed){
-    //         camp.create(seed, function(err, respond1){
-    //             if(err){
-    //                 console.log("failed");
-    //             }else{
-    //                 console.log("responds");
-    //                 //comments
-    //                 comment.create({text: "new commeent by admin",  author: "hernomine"}, function (err, responds2) {
-    //                         if (err) {
-    //                             console.log("failed")
-    //                         } else {
-    //                             respond1.comment.push(responds2);
-    //                             respond1.save();
-    //                             console.log("added");
-    //                         }
-    //                     });
-    //         }
-    //     });
-  // });
-}
+const seeder = async () => {
+  try {
+    const delRes = await camp.deleteMany({});
+    data.forEach(async elem => {
+      const newCamp = await camp.create(elem);
+      const newComment = await comment.create({
+        text: 'new comment by admin',
+        author: 'hernomine',
+      });
+      newCamp.comment.push(newComment);
+      newCamp.save();
+    });
+  } catch (err) {
+    throw err;
+  }
+};
+module.exports = seeder;
 
-module.exports = seed;

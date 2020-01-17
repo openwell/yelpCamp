@@ -4,6 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
+    "drop": "babel-node seed.js",
     "start": "nodemon --exec babel-node ./src/app.js",
     "server": "nodemon --exec node ./src/app.js",
     "lint": "eslint .",
