@@ -19,15 +19,12 @@ dotenv.config();
 const app = express();
 
 // seeder();
-mongoose.connect(
-  'mongodb+srv://timi:12345@cluster0-fdmmq.mongodb.net/test?retryWrites=true',
-  {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false,
-  }
-);
+mongoose.connect(process.env.MONGO_SERVER, {
+  useNewUrlParser: true,
+  useCreateIndex: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false,
+});
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
