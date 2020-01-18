@@ -9,9 +9,9 @@ import flash from 'connect-flash';
 import logger from 'morgan';
 import dotenv from 'dotenv';
 import user from './models/user';
-import commentRoutes from './routes/comments';
-import campRoutes from './routes/camps';
-import authRoutes from './routes/auth';
+import commentRoutes from './router/comments';
+import campRoutes from './router/camps';
+import authRoutes from './router/auth';
 import seeder from '../seed';
 // import LocalStrategy from 'passport-local';
 
@@ -19,15 +19,12 @@ dotenv.config();
 const app = express();
 
 // seeder();
-mongoose.connect(
-  'mongodb+srv://timi:12345@cluster0-fdmmq.mongodb.net/test?retryWrites=true',
-  {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false,
-  }
-);
+mongoose.connect(process.env.MONGO_SERVER, {
+  useNewUrlParser: true,
+  useCreateIndex: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false,
+});
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -72,6 +69,9 @@ app.use('/camps', campRoutes);
 
 app.get('/', (req, res) => {
   res.render('landing');
+});
+app.get('*', (req, res) => {
+  res.redirect('/');
 });
 
 const { PORT } = process.env;

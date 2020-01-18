@@ -1,15 +1,9 @@
 <% include ../partials/header %>
 
-<div class="camp_form">
-  <h3>Add New Comment</h3>
+<div class="comment_form">
+  <h3>New Comment</h3>
   <form action="/camps/<%=camp._id%>/comment" method="post">
-    <!-- Aurthor
-            <br>
-            <input type="text" name="comments[author]">
-            <br> Text -->
-    <br />
     <textarea name="comments[text]"></textarea>
-    <br />
     <button>submit</button>
   </form>
   <a href="/camps">
