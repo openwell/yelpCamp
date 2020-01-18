@@ -1,62 +1,61 @@
 <% include ../partials/header %>
 
 <section class="details_container">
-  <div class="details_name">
-    <!-- <label for="name">Camp Name</label> -->
-    <h2><%= camp.name %></h2>
+  <div class="camp_details">
+    <aside class="camp_details_image">
+      <img src="<%=camp.image %>" alt="" />
+    </aside>
+
+    <aside class="camp_details_info">
+      <h1><%= camp.name %></h1>
+      <p><%= camp.description %></p>
+      <p>Created by: <%= camp.author.username %></p>
+      <div class="camp_del_edit">
+        <% if (currentUser && camp.author.id.equals(currentUser._id) ){ %>
+        <a href="/camps/<%=camp._id%>/edit">
+          <button class="camp_but_edit">Edit</button>
+        </a>
+        <!-- delete forms -->
+        <form
+          action="/camps/<%= camp._id %>?_method=DELETE"
+          method="POST"
+          style="display: inline"
+        >
+          <button class="camp_but_del">Delete</button>
+        </form>
+        <% } %>
+      </div>
+    </aside>
   </div>
 
-  <div class="details_image">
-    <!-- <label for="image">Camp Image</label> -->
-    <img src="/<%= camp.image %>" class="" alt="" />
+  <div class="details_comment_but">
+    <!-- <a href="/camps"><button>Back</button></a> -->
+    <a href="/camps/<%=camp._id%>/comment/new"><button>New Comment</button></a>
+    <hr />
   </div>
-
-  <div class="details_desc">
-    <!-- <label for="description">Camp Description</label> -->
-    <h3><%= camp.description %></h3>
-  </div>
-  <div class="">
-    <!-- <label for="description">Camp Description</label> -->
-    <h3>Created by: <%= camp.author.username %></h3>
-    <% if (currentUser && camp.author.id.equals(currentUser._id) ){ %>
-    <a href="/camps/<%=camp._id%>/edit">
-      <button>Edit</button>
-    </a>
-    <!-- delete forms -->
-    <form
-      action="/camps/<%= camp._id %>?_method=DELETE"
-      method="POST"
-      style="display: inline"
-    >
-      <button>Delete</button>
-    </form>
-    <% } %>
-  </div>
-
   <!-- Comments -->
-  <% camp.comment.forEach(function(data){%>
-  <div class="comment">
-    <!-- <label for="comment">Camp Description</label> -->
-    <p><strong><%= data.author.username %>: </strong> <%= data.text %></p>
+  <section class="details_comments_container">
+    <h2>Comments</h2>
+    <% camp.comment.forEach(function(data){%>
+    <div class="details_comment">
+      <span><%= data.author.username %></span>
+      <p><%= data.text %></p>
 
-    <% if (currentUser && data.author.id.equals(currentUser._id) ){ %>
-    <a href="/camps/<%=camp._id%>/comment/<%=data._id%>/edit"
-      ><button>Edit Comment</button></a
-    >
-    <form
-      action="/camps/<%=camp._id%>/comment/<%=data._id%>?_method=DELETE"
-      method="POST"
-      style="display: inline"
-    >
-      <button>Delete Comment</button>
-    </form>
-    <% } %>
-  </div>
-  <% });%>
-
-  <br />
-  <a href="/camps"><button>Back</button></a>
-  <a href="/camps/<%=camp._id%>/comment/new"><button>New Comment</button></a>
+      <% if (currentUser && data.author.id.equals(currentUser._id) ){ %>
+      <a href="/camps/<%=camp._id%>/comment/<%=data._id%>/edit"
+        ><button>Edit</button></a
+      >
+      <form
+        action="/camps/<%=camp._id%>/comment/<%=data._id%>?_method=DELETE"
+        method="POST"
+        style="display: inline"
+      >
+        <button>Delete</button>
+      </form>
+      <% } %>
+    </div>
+    <% });%>
+  </section>
 </section>
 
 <% include ../partials/footer %>

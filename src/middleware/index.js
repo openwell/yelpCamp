@@ -2,7 +2,6 @@ import camp from '../models/camp';
 import comment from '../models/comment';
 
 const middlewareObj = {
-
   checkCampOwner: async (req, res, next) => {
     if (req.isAuthenticated()) {
       try {
@@ -10,10 +9,9 @@ const middlewareObj = {
         if (respond.author.id.equals(req.user._id)) {
           return next();
         }
-        return res.redirect('back');
+        res.redirect('back');
       } catch (err) {
-        console.log(err);
-        return res.redirect('back');
+        res.redirect('back');
       }
     }
     return res.redirect('back');
@@ -26,16 +24,16 @@ const middlewareObj = {
         if (respond.author.id.equals(req.user._id)) {
           return next();
         }
-        return res.redirect('back');
+        res.redirect('back');
       } catch (err) {
-        console.log(err);
-        return res.redirect('back');
+        res.redirect('back');
       }
     }
     return res.redirect('back');
   },
   isLoggedIn: (req, res, next) => {
     if (req.isAuthenticated()) {
+      console.log('he');
       return next();
     }
     return res.redirect('/login');

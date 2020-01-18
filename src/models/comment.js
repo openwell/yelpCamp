@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-// import user from '../models/user';
 
 const commentSchema = new mongoose.Schema({
   text: String,

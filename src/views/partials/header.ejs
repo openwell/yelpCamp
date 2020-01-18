@@ -1,36 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="/app.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="/app.css" />
     <title>Yelp App</title>
-</head>
-<body>
+  </head>
+  <body>
     <header>
-        <nav>
-            
-            <ul>
-             <a href="/ "><li >Home</li> </a>
-            <a href="/camps "> <li>Camps</li></a>
-            <a href="/camps/form"> <li>New Camp</li></a>
-           <% if(!currentUser){ %>
-            <a href="/login "> <li>Login</li></a>
-            <a href="/register "> <li>Register</li></a>
-            <% } else{ %>
-                <li>Signed in as <%= currentUser.username %> </li>
-            <a href="/logout "> <li>Log Out</li></a>
-            <% }%>
-            </ul>
-        </nav>
+      <nav>
+        <ul>
+          <a href="/ "><li>Home</li> </a>
+          <a href="/camps "> <li>Camps</li></a>
+          <a href="/camps/form"> <li>Add Camp</li></a>
+          <% if(!currentUser){ %>
+          <a href="/login "> <li style="background: #000; color: #fff;">Login</li></a>
+          <a href="/register "> <li>Register</li></a>
+          <% } else{ %>
+          <li>Welcome <%= currentUser.username %></li>
+          <a href="/logout ">
+            <li style="background: #000; color: #fff;">Log Out</li></a
+          >
+          <% }%>
+        </ul>
+      </nav>
     </header>
-    
+
     <div class="alert">
-        <% if(success && success.length > 0){%>
-        <div class="success_alert"><%= success %></div>
-        <%}%>   <% if(error && error.length > 0){ %>
-        <div class="error_alert"><%= error %></div>
-        <%}%>
+      <% if(success && success.length > 0){%>
+      <div class="success_alert"><%= success %></div>
+      <%}%> <% if(error && error.length > 0){ %>
+      <div class="error_alert"><%= error %></div>
+      <%}%>
     </div>
-    
+  </body>
+</html>
