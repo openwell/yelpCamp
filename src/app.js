@@ -9,9 +9,9 @@ import flash from 'connect-flash';
 import logger from 'morgan';
 import dotenv from 'dotenv';
 import user from './models/user';
-import commentRoutes from './routes/comments';
-import campRoutes from './routes/camps';
-import authRoutes from './routes/auth';
+import commentRoutes from './router/comments';
+import campRoutes from './router/camps';
+import authRoutes from './router/auth';
 import seeder from '../seed';
 // import LocalStrategy from 'passport-local';
 
@@ -72,6 +72,9 @@ app.use('/camps', campRoutes);
 
 app.get('/', (req, res) => {
   res.render('landing');
+});
+app.get('*', (req, res) => {
+  res.redirect('/');
 });
 
 const { PORT } = process.env;
