@@ -24,7 +24,7 @@ router.post(
 // logout
 router.get('/logout', (req, res) => {
   req.logout();
-  req.flash('success', 'log out successful');
+  req.flash('success', 'Log out successful');
   res.redirect('/camps');
 });
 
