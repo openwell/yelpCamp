@@ -7,6 +7,7 @@ const router = express.Router();
 // //==================
 // User Login and Registration
 // ///================
+
 // login
 router.get('/login', (req, res) => {
   res.render('auth/login');
@@ -17,14 +18,13 @@ router.post(
   passport.authenticate('local', {
     successRedirect: '/camps',
     failureRedirect: '/login',
-  }),
+  })
 );
 
 // logout
-
 router.get('/logout', (req, res) => {
   req.logout();
-  req.flash('success', 'log out successful');
+  req.flash('success', 'Log out successful');
   res.redirect('/camps');
 });
 
@@ -33,25 +33,19 @@ router.get('/register', (req, res) => {
   res.render('auth/register');
 });
 
-router.post('/register', (req, res) => {
-  User.register(
-    new User({ username: req.body.username }),
-    req.body.password,
-  )
-    .then(() => {
-      passport.authenticate('local')
-        .then(() => {
-          res.redirect('/camps');
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    })
-    .catch((err) => {
-      console.log(err);
-      return res.render('auth/register');
+router.post('/register', async (req, res) => {
+  try {
+    const regOutput = await User.register(
+      new User({ username: req.body.username }),
+      req.body.password
+    );
+    passport.authenticate('local')(req, res, () => {
+      res.redirect('/camps');
     });
+  } catch (err) {
+    // console.log(err.message);
+    res.render('auth/register');
+  }
 });
-
 
 export default router;

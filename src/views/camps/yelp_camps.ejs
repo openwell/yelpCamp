@@ -1,28 +1,26 @@
 <% include ../partials/header %>
+<section class="yelp_camps">
+  <div class="yelp_banner">
+    <h1>List of Available Camps</h1>
+    <a href="\camps\form"><button>Add Camp</button></a>
+  </div>
 
-<div class="yelp_banner">
-  <h1>Welcome to Yelp-Camp</h1>
-  <a href="\camps\form"><button>New Camp</button></a>
-</div>
-
-<div class="yelp_container">
-  <% camp.forEach (function(camp){ %>
-  <article class="Blogs__blog ">
-    <div class="blog__user-info">
-      <img
-        src="<%= camp.image %>"
-        class="blog__user-info__avatar avatar--circle"
-        alt=""
-      />
-      <p class="blog__user-info__username"><%= camp.name %></p>
-    </div>
-    <div class="blog__blog-post">
+  <div class="yelp_container">
+    <% camp.forEach (function(camp){ %>
+    <div class="camp">
+      <div class="camp_info">
+        <img src="<%= camp.image %>" alt="camp_image" />
+        <div>
+          <p class=""><%= camp.name %></p>
+          <a href="\camps\<%=camp._id%>"><button>More Details</button></a><br />
+        </div>
+      </div>
+      <!-- <div class="blog__blog-post">
       <h2 class="blog__blog-post__heading"><%= camp.name %></h2>
-      <!-- <p class="blog__blog-post__blog-body"><%= camp.description.substring(0, 40) %> -->
-      <a href="\camps\<%=camp._id%>"><button>More Details</button></a><br />
+      <p class="blog__blog-post__blog-body"><%= camp.description %> 
+      </div> -->
     </div>
-  </article>
-  <% }); %>
-</div>
-
+    <% }); %>
+  </div>
+</section>
 <% include ../partials/footer %>
