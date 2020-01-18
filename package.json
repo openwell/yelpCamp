@@ -4,10 +4,9 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "build": "babel ./src/app.js -d dist",
-    "drop": "babel-node seed.js",
-    "start": "nodemon --exec babel-node ./src/app.js",
-    "server": "nodemon --exec node ./src/app.js",
+    "build": "babel ./src -d dist",
+    "start": "node ./dist/app.js",
+    "server": "nodemon --exec babel-node ./src/app.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },
