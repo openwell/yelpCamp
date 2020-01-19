@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "build": "babel -d build ./src -s",
-    "start": "node --experimental-modules --es-module-specifier-resolution=node ./src/app.js",
+    "start": "node --experimental-modules  ./build/app.js",
     "server": "nodemon --experimental-modules --es-module-specifier-resolution=node ./src/app.js",
     "dev": "nodemon --exec babel-node ./src/app.js",
     "lint": "eslint .",
