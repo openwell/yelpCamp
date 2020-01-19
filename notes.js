@@ -49,7 +49,6 @@
 //     });
 //   });
 
-
 // unhandled promise exception i caused when we try to rethrow an error that node has handled
 // if you are using async await and u don't intend to modify the error you dont need try and catch
 // when you make use of a callback which returns an err or res then u can check for if(err) to handle it. dont use try and catch for it
