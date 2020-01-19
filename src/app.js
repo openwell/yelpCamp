@@ -12,11 +12,15 @@ import user from './models/user';
 import commentRoutes from './router/comments';
 import campRoutes from './router/camps';
 import authRoutes from './router/auth';
-import seeder from '../seed';
+import session from 'express-session';
+// import seeder from '../seed';
 // import LocalStrategy from 'passport-local';
+import { fileURLToPath } from 'url';
 
 dotenv.config();
 const app = express();
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // seeder();
 mongoose.connect(process.env.MONGO_SERVER, {
@@ -39,8 +43,7 @@ app.use(flash());
 app.use(logger('dev'));
 
 // passport configuration
-app.use(
-  require('express-session')({
+app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
