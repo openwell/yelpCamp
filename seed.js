@@ -1,6 +1,6 @@
 var mongoose = require("mongoose");
 var camp = require("./src/models/camp");
-var comment = require("./src/models/comment").default;
+var comment = require("./src/models/comment");
 
 var data = [
   {
@@ -26,30 +26,30 @@ var data = [
 //remove campground
 function seed() {
   camp.remove({}, function(err) {
-    //     if(err){
-    //         console.log("failed")
-    //     }else{
-    //        console.log("removed camp");
-    //     }
-    // });
-    //     data.forEach(function(seed){
-    //         camp.create(seed, function(err, respond1){
-    //             if(err){
-    //                 console.log("failed");
-    //             }else{
-    //                 console.log("responds");
-    //                 //comments
-    //                 comment.create({text: "new commeent by admin",  author: "hernomine"}, function (err, responds2) {
-    //                         if (err) {
-    //                             console.log("failed")
-    //                         } else {
-    //                             respond1.comment.push(responds2);
-    //                             respond1.save();
-    //                             console.log("added");
-    //                         }
-    //                     });
-    //         }
-    //     });
+        if(err){
+            console.log("failed")
+        }else{
+           console.log("removed camp");
+        }
+    });
+        data.forEach(function(seed){
+            camp.create(seed, function(err, respond1){
+                if(err){
+                    console.log("failed");
+                }else{
+                    console.log("responds");
+                    //comments
+                    comment.create({text: "new commeent by admin",  author: "hernomine"}, function (err, responds2) {
+                            if (err) {
+                                console.log("failed")
+                            } else {
+                                respond1.comment.push(responds2);
+                                respond1.save();
+                                console.log("added");
+                            }
+                        });
+            }
+        });
   });
 }
 

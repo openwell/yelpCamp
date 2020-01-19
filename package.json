@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon --exec babel-node ./src/app.js",
-    "startt": "nodemon --exec node ./src/app.js"
+    "dev": "nodemon ./src/app.js"
   },
   "author": "timi",
   "license": "ISC",
@@ -16,6 +16,7 @@
     "body-parser": "^1.18.3",
     "connect-flash": "^0.1.1",
     "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
     "ejs": "^2.6.1",
     "express": "^4.16.4",
     "express-sanitizer": "^1.0.5",

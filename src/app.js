@@ -13,14 +13,16 @@ var express = require('express'),
   //model imports
   seed = require('../seed'),
   camp = require('./models/camp'),
-  comment = require('./models/comment').default,
+  comment = require('./models/comment'),
   user = require('./models/user'),
   //Routes Import it think we only needed to import them to shorting the link
   commentRoutes = require('./routes/comments'),
   campRoutes = require('./routes/camps'),
-  authRoutes = require('./routes/auth');
+  authRoutes = require('./routes/auth'),
+  dotenv = require('dotenv');
 
 app.use(cors());
+dotenv.config();
 // seed(); //easy delete
 // mongoose.connect("mongodb://localhost/yelp_camp");
 // mongoose.connect("mongodb://localhost:27017/yelp_camp", { useNewUrlParser: true });
@@ -53,7 +55,7 @@ app.use(flash());
 // passport configuration
 app.use(
   require('express-session')({
-    secret: 'i love bukky',
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false
   })
@@ -83,7 +85,7 @@ app.get('/', function(req, res) {
 });
 
 //must be there works with request
-app.listen(3000, function() {
+app.listen(process.env.PORT, function() {
   console.log('server working');
 });
 // cloud 9 was wat he used
