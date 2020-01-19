@@ -44,4 +44,3 @@ const seeder = async () => {
   }
 };
 module.exports = seeder;
-
