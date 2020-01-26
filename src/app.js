@@ -8,6 +8,8 @@ import passport from 'passport';
 import flash from 'connect-flash';
 import logger from 'morgan';
 import dotenv from 'dotenv';
+import Sequelize from 'sequelize';
+// import pg from 'pg';
 import user from './models/user';
 import commentRoutes from './router/comments';
 import campRoutes from './router/camps';
@@ -21,7 +23,8 @@ dotenv.config();
 const app = express();
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
+// pg.defaults.ssl = true;
+const sequelize = new Sequelize(process.env.PG_URI);
 // seeder();
 mongoose.connect(process.env.MONGO_SERVER, {
   useNewUrlParser: true,
@@ -43,7 +46,8 @@ app.use(flash());
 app.use(logger('dev'));
 
 // passport configuration
-app.use(session({
+app.use(
+  session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
@@ -54,6 +58,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // passport.use(new LocalStrategy(user.authenticate()));
+// i think the plugin gives us the privilege of not written it like above
 passport.use(user.createStrategy());
 passport.serializeUser(user.serializeUser());
 passport.deserializeUser(user.deserializeUser());
@@ -64,6 +69,7 @@ app.use((req, res, next) => {
   res.locals.success = req.flash('success');
   next(); // general
 });
+
 
 // routes
 app.use('', authRoutes);

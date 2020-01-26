@@ -1,3 +1,11 @@
+// google authentication
+// comment section to modal
+// better notification
+// Ui refactoring
+// docker, pagination, search, redis
+// testing
+
+
 // combining export default and required gave me problems
 // I solved it by making adding default to the back of the require call in seed
 // for process.env it will be

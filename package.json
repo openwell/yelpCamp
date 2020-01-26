@@ -34,7 +34,10 @@
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^5.0.1",
     "passport-twitter": "^1.0.4",
-    "request": "^2.88.0"
+    "pg": "^7.17.1",
+    "pg-hstore": "^2.3.3",
+    "request": "^2.88.0",
+    "sequelize": "^5.21.3"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.3",
