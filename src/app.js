@@ -2,15 +2,14 @@ import express from 'express';
 import cors from 'cors';
 import expressSanitizer from 'express-sanitizer';
 import path from 'path';
-import mongoose from 'mongoose';
+// import mongoose from 'mongoose';
 import methodoverride from 'method-override';
 import passport from 'passport';
 import flash from 'connect-flash';
 import logger from 'morgan';
 import dotenv from 'dotenv';
 import Sequelize from 'sequelize';
-// import pg from 'pg';
-import user from './models/user';
+import user from './model/user';
 import commentRoutes from './router/comments';
 import campRoutes from './router/camps';
 import authRoutes from './router/auth';
@@ -24,14 +23,14 @@ const app = express();
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 // pg.defaults.ssl = true;
-const sequelize = new Sequelize(process.env.PG_URI);
+const sequelize = new Sequelize(process.env.DATABASE_URL);
 // seeder();
-mongoose.connect(process.env.MONGO_SERVER, {
-  useNewUrlParser: true,
-  useCreateIndex: true,
-  useUnifiedTopology: true,
-  useFindAndModify: false,
-});
+// mongoose.connect(process.env.MONGO_SERVER, {
+//   useNewUrlParser: true,
+//   useCreateIndex: true,
+//   useUnifiedTopology: true,
+//   useFindAndModify: false,
+// });
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

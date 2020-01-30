@@ -1,5 +1,5 @@
-import camp from '../models/camp';
-import comment from '../models/comment';
+import camp from '../model/camp';
+import comment from '../model/comment';
 
 const middlewareObj = {
   checkCampOwner: async (req, res, next) => {

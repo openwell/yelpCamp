@@ -1,16 +1,23 @@
-import mongoose from 'mongoose';
-import passportLocalMongoose from 'passport-local-mongoose';
-
-const userSchema = new mongoose.Schema({
-  username: {
-    type: String,
-    unique: true,
-    required: true,
-  },
-  // username: String,
-  password: String,
-});
-userSchema.plugin(passportLocalMongoose);
-const user = mongoose.model('user', userSchema);
+const user = (sequelize, DataTypes) => {
+  const User = sequelize.define(
+    'User',
+    {
+      username: {
+        type: DataTypes.STRING,
+        allowNull: {
+          args: false,
+          msg: 'Please enter your Username',
+        },
+        unique: true,
+      },
+      password: { type: DataTypes.STRING, allowNull: false },
+    },
+    {}
+  );
+  User.associate = function(models) {
+    // associations can be defined here
+  };
+  return User;
+};
 
 export default user;

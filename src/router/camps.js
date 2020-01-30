@@ -1,5 +1,5 @@
 import express from 'express';
-import camp from '../models/camp';
+import camp from '../model/camp';
 import middlewareObj from '../middleware';
 import campController from '../controllers/camp';
 

@@ -1,15 +1,16 @@
-import mongoose from 'mongoose';
-
-const commentSchema = new mongoose.Schema({
-  text: String,
-  author: {
-    id: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'user',
+const comment = (sequelize, DataTypes) => {
+  const Comment = sequelize.define(
+    'Comment',
+    {
+      text: { type: DataTypes.STRING, allowNull: false },
+      author: { type: DataTypes.STRING, allowNull: false },
     },
-    username: String,
-  },
-});
-const comment = mongoose.model('comment', commentSchema);
+    {}
+  );
+  Comment.associate = function(models) {
+    // associations can be defined here
+  };
+  return Comment;
+};
 
 export default comment;
