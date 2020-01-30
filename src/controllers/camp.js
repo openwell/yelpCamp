@@ -1,4 +1,4 @@
-import camp from '../models/camp';
+import camp from '../model/camp';
 
 const campController = {
   getAllCamps: async (req, res) => {

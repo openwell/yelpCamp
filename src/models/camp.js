@@ -1,22 +1,19 @@
-import mongoose from 'mongoose';
-
-const campgroundSchema = new mongoose.Schema({
-  name: String,
-  image: String,
-  description: String,
-  author: {
-    id: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'user',
-    },
-    username: String,
-  },
-  comment: [
+const camp = (sequelize, DataTypes) => {
+  const Camp = sequelize.define(
+    'Camp',
     {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'comment',
+      name: { type: DataTypes.STRING, allowNull: false },
+      image: { type: DataTypes.STRING, allowNull: false },
+      description: { type: DataTypes.STRING, allowNull: false },
+      author: { type: DataTypes.STRING, allowNull: false },
+      comment: { type: DataTypes.STRING, allowNull: false },
     },
-  ],
-});
-const camp = mongoose.model('camps', campgroundSchema);
+    {}
+  );
+  Camp.associate = function(models) {
+    // associations can be defined here
+  };
+  return Camp;
+};
+
 export default camp;
