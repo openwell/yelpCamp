@@ -1,39 +1,46 @@
-import camp from '../model/camp';
+const models = require('../models');
 
+const { Camp, comment } = models;
 const campController = {
   getAllCamps: async (req, res) => {
     try {
-      const data = await camp.find();
+      const data = await Camp.findAll();
       res.render('camps/yelp_camps', { camp: data });
     } catch (err) {
+      console.log(err);
       res.redirect('/');
     }
   },
   getOneCamp: async (req, res) => {
     try {
-      const data = await camp
-        .findById(req.params.id)
-        .populate('comment')
-        .exec();
-      res.render('camps/details', { camp: data });
+      const data = await Camp.findByPk(req.params.id);
+      const data2 = await comment.findAll({
+        where: {
+          id: data.id,
+        },
+      });
+      // .populate('comment')
+      // .exec();
+      res.render('camps/details', { camp: data2 });
     } catch (err) {
       res.redirect('/camps');
     }
   },
   createCamp: async (req, res) => {
     const { name, image, description } = req.body;
-    const author = {
-      id: req.user._id,
-      username: req.user.username,
-    };
+    // const author = {
+    //   id: req.user._id,
+    //   username: req.user.username,
+    // };
     const newCamp = {
       name,
       image,
       description,
-      author,
+      authorId: req.user._id,
+      authorName: req.user.username,
     };
     try {
-      await camp.create(newCamp);
+      await Camp.create(newCamp);
       res.redirect('/camps');
     } catch (error) {
       res.redirect('/camps');
@@ -41,7 +48,12 @@ const campController = {
   },
   editCamp: async (req, res) => {
     try {
-      await camp.findByIdAndUpdate(req.params.id, req.body.campE);
+      await Camp.update(req.body.campE, {
+        where: {
+          id: req.params.id,
+        },
+      });
+
       res.redirect(`/camps/${req.params.id}`);
     } catch (error) {
       res.redirect('/camps');
@@ -49,7 +61,11 @@ const campController = {
   },
   deleteCamp: async (req, res) => {
     try {
-      await camp.findByIdAndRemove(req.params.id);
+      await Camp.destroy({
+        where: {
+          id: req.params.id,
+        },
+      });
       res.redirect(`/camps/${req.params.id}`);
     } catch (error) {
       res.redirect('/camps');
@@ -57,4 +73,4 @@ const campController = {
   },
 };
 
-export default campController;
+module.exports = campController;

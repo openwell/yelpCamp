@@ -1,7 +1,14 @@
+// eslint-disable-next-line max-lines-per-function
 const user = (sequelize, DataTypes) => {
   const User = sequelize.define(
     'User',
     {
+      id: {
+        allowNull: false,
+        primaryKey: true,
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+      },
       username: {
         type: DataTypes.STRING,
         allowNull: {
@@ -14,10 +21,19 @@ const user = (sequelize, DataTypes) => {
     },
     {}
   );
-  User.associate = function(models) {
+  User.associate = models => {
     // associations can be defined here
+    User.hasMany(models.Camp, {
+      foreignKey: 'author_id',
+      onDelete: 'CASCADE',
+    });
+    User.hasMany(models.Comment, {
+      foreignKey: 'author_id',
+      onDelete: 'CASCADE',
+    });
   };
   return User;
 };
 
-export default user;
+module.exports = user;
+// hasOne hasMany BelongsTo BelongsToMany

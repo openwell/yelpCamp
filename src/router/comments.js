@@ -1,12 +1,13 @@
-import express from 'express';
-import camp from '../model/camp';
-import comment from '../model/comment';
-import middlewareObj from '../middleware';
+const express = require('express');
+const middlewareObj = require('../middleware');
+const models = require('../models');
+
+const { Camp, Comment } = models;
 
 const router = express.Router({ mergeParams: true });
 
 router.get('/new', middlewareObj.isLoggedIn, (req, res) => {
-  camp.findById(req.params.id, (err, data) => {
+  Camp.findByPk(req.params.id, (err, data) => {
     if (err) {
       throw err;
     }
@@ -16,7 +17,7 @@ router.get('/new', middlewareObj.isLoggedIn, (req, res) => {
 
 // edit page
 router.get('/:id2/edit', middlewareObj.checkComment, (req, res) => {
-  comment.findById(req.params.id2, (err, data) => {
+  Comment.findByPk(req.params.id2, (err, data) => {
     if (err) {
       res.redirect('back');
       throw err;
@@ -27,44 +28,69 @@ router.get('/:id2/edit', middlewareObj.checkComment, (req, res) => {
 
 // put edit
 // edit page
-router.put('/:id2', middlewareObj.checkComment, (req, res) => {
-  comment.findByIdAndUpdate(req.params.id2, req.body.comments, (err, data) => {
-    if (err) {
-      throw err;
-    }
+router.put('/:id2', middlewareObj.checkComment, async (req, res) => {
+  try {
+    await Comment.update(req.body.comments, {
+      where: { id: req.params.id },
+    });
     return res.redirect(`/camps/${req.params.id}`);
-  });
+  } catch (err) {
+    throw err;
+  }
 });
 
 // delete
-router.delete('/:id2', middlewareObj.checkComment, (req, res) => {
-  comment.findByIdAndRemove(req.params.id2, (err, data) => {
-    if (err) {
-      res.redirect('back');
-      throw err;
-    }
-    return res.redirect(`/camps/${req.params.id}`);
-  });
-});
-
-router.post('/', (req, res) => {
-  camp.findById(req.params.id, (err01, data01) => {
-    if (err01) {
-      res.render('camps');
-      throw err01;
-    }
-    comment.create(req.body.comments, (err, data02) => {
-      if (err) {
-        throw err;
-      }
-      data02.author.id = req.user._id;
-      data02.author.username = req.user.username;
-      data02.save();
-      data01.comment.push(data02);
-      data01.save();
-      res.redirect(`/camps/${data01._id}`);
+router.delete('/:id2', middlewareObj.checkComment, async (req, res) => {
+  try {
+    await Comment.destroy({
+      where: {
+        id: req.params.id2,
+      },
     });
-  });
+    return res.redirect(`/camps/${req.params.id}`);
+  } catch (err) {
+    res.redirect('back');
+    throw err;
+  }
+  // comment.findByIdAndRemove(req.params.id2, (err, data) => {
+  //   if (err) {
+  //     res.redirect('back');
+  //     throw err;
+  //   }
+  //
+  // });
 });
 
-export default router;
+router.post('/', async (req, res) => {
+  try {
+    await Comment.create({
+      text: req.body.comments,
+      authorId: req.user._id,
+      authorName: req.user.username,
+      campId: req.params.id,
+    });
+    res.redirect(`/camps/${req.params.id}`);
+  } catch (err) {
+    throw err;
+  }
+
+  // camp.findByPk(req.params.id, (err01, data01) => {
+  //   if (err01) {
+  //     res.render('camps');
+  //     throw err01;
+  //   }
+  //   comment.create(req.body.comments, (err, data02) => {
+  //     if (err) {
+  //       throw err;
+  //     }
+  //     data02.author.id = req.user._id;
+  //     data02.author.username = req.user.username;
+  //     data02.save();
+  //     data01.comment.push(data02);
+  //     data01.save();
+  //     res.redirect(`/camps/${data01._id}`);
+  //   });
+  // });
+});
+
+module.exports = router;

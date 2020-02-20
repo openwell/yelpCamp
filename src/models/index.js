@@ -1,7 +1,7 @@
-import fs from 'fs';
-import path from 'path';
-import Sequelize from 'sequelize';
-import configuration from '../configs/config';
+const fs = require('fs');
+const path = require('path');
+const Sequelize = require('sequelize');
+const configuration = require('../configs/config.cjs');
 
 const basename = path.basename(__filename);
 

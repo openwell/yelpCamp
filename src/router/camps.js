@@ -1,10 +1,10 @@
-import express from 'express';
-import camp from '../model/camp';
-import middlewareObj from '../middleware';
-import campController from '../controllers/camp';
+const express = require('express');
+const models = require('../models');
+const middlewareObj = require('../middleware');
+const campController = require('../controllers/camp');
 
 const router = express.Router();
-
+const { Camp } = models;
 const {
   getAllCamps,
   getOneCamp,
@@ -22,9 +22,9 @@ router.post('/', middlewareObj.isLoggedIn, createCamp);
 router.put('/:id', middlewareObj.checkCampOwner, editCamp);
 router.delete('/:id', middlewareObj.checkCampOwner, deleteCamp);
 router.get('/:id/edit', middlewareObj.checkCampOwner, (req, res) => {
-  camp.findById(req.params.id, (err, responds) => {
+  Camp.findById(req.params.id, (err, responds) => {
     res.render('camps/edit', { camp: responds });
   });
 });
 
-export default router;
+module.exports = router;

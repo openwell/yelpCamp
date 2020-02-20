@@ -1,5 +1,6 @@
-import camp from '../model/camp';
-import comment from '../model/comment';
+const models = require('../models');
+
+const { camp, comment } = models;
 
 const middlewareObj = {
   checkCampOwner: async (req, res, next) => {
@@ -39,4 +40,4 @@ const middlewareObj = {
     return res.redirect('/login');
   },
 };
-export default middlewareObj;
+module.exports = middlewareObj;
